@@ -7,9 +7,6 @@ version: 2
 jobs:
   build:
     <<: *defaults
-    filters:
-      tags:
-        only: /.*/
     steps:
       - run: mkdir -p workspace
       - run: cd workspace
@@ -28,11 +25,6 @@ jobs:
       - run: Scripts/packageNWScript.sh
       - store_artifacts:
           path: Binaries
-    filters:
-      tags:
-        only: /^build.*/
-    branches:
-      only: /master/
 
       
 workflows:
@@ -41,6 +33,14 @@ workflows:
   build-deploy:
     jobs:
       - build
+        filters:
+          tags:
+            only: /.*/
       - deploy:
           requires:
             - build        
+        filters:
+          tags:
+            only: /^build.*/
+        branches:
+          only: /master/
