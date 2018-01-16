@@ -21,16 +21,15 @@ jobs:
 
   deploy:
     <<: *defaults
-    steps:
-      - attach_workspace:
-        at: /tmp/workspace
-
     filters:
       tags:
         only: /^build.*/
     branches:
       only: /master/
     steps:
+      - attach_workspace:
+        at: /tmp/workspace
+      - run: cd /tmp/workspace
       - run: Scripts/packageNWScript.sh
       - store_artifacts:
           path: Binaries
