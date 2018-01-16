@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: /tmp
   docker:
-      - image: nwnxee/builder
+    - image: nwnxee/builder
 
 version: 2
 jobs:
