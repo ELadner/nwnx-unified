@@ -5,7 +5,7 @@ defaults: &defaults
 
 version: 2
 jobs:
-  build:
+  build-nwnxee:
     <<: *defaults
     steps:
       - run: mkdir -p workspace
@@ -16,7 +16,7 @@ jobs:
       - persist_to_workspace:
         root: /tmp/workspace
 
-  deploy:
+  package-nwnxee:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -32,13 +32,13 @@ workflows:
 
   build-deploy:
     jobs:
-      - build
+      - build-nwnxee
         filters:
           tags:
             only: /.*/
-      - deploy:
-          requires:
-            - build        
+      - package-nwnxee:
+        requires:
+          - build-nwnxee        
         filters:
           tags:
             only: /^build.*/
