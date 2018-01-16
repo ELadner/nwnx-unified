@@ -32,7 +32,7 @@ workflows:
 
   build-deploy:
     jobs:
-      - build-nwnxee
+      - build-nwnxee:
         filters:
           tags:
             only: /.*/
