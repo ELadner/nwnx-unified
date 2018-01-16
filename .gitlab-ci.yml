@@ -9,7 +9,6 @@ build:
     - CC="gcc -m32" CXX="g++ -m32" cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .
     - make all
     - Scripts/packageNWScript.sh
-    
   artifacts:
     paths:
       - Binaries/NWNX_*.*
