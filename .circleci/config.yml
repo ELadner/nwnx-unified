@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker.nwnx.io:443/nwnxee/unified:builder
+    steps:
+      - checkout
+      - run: CC="gcc -m32" CXX="g++ -m32" cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+      - run: make all
+      - run: Scripts/packageNWScript.sh
+      - store_artifacts:
+          path: Binaries
+
