@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: /tmp
   docker:
-      - image: docker.nwnx.io:443/nwnxee/unified:builder
+      - image: nwnxee/builder
 
 version: 2
 jobs:
@@ -21,11 +21,6 @@ jobs:
 
   deploy:
     <<: *defaults
-    filters:
-      tags:
-        only: /^build.*/
-    branches:
-      only: /master/
     steps:
       - attach_workspace:
         at: /tmp/workspace
@@ -33,6 +28,12 @@ jobs:
       - run: Scripts/packageNWScript.sh
       - store_artifacts:
           path: Binaries
+    filters:
+      tags:
+        only: /^build.*/
+    branches:
+      only: /master/
+
       
 workflows:
   version: 2
