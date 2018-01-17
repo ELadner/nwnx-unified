@@ -8,8 +8,6 @@ jobs:
   build:
     <<: *defaults
     steps:
-      - run: mkdir -p workspace
-      - run: cd workspace
       - checkout
       - run: CC="gcc -m32" CXX="g++ -m32" cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .
       - run: make all
@@ -20,12 +18,10 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: /tmp/workspace
-      - run: cd /tmp/workspace
+          at: /tmp
       - run: Scripts/packageNWScript.sh
       - store_artifacts:
           path: Binaries
-
       
 workflows:
   version: 2
