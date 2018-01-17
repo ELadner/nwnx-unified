@@ -1,15 +1,15 @@
 version: 2
 jobs:
   build:
-  docker:
-    - image: nwnxee/builder
-  steps:
-    - checkout
-    - run: CC="gcc -m32" CXX="g++ -m32" cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .
-    - run: make all
-    - run: Scripts/packageNWScript.sh
-    - store_artifacts:
-        path: Binaries
+    docker:
+      - image: nwnxee/builder
+    steps:
+      - checkout
+      - run: CC="gcc -m32" CXX="g++ -m32" cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+      - run: make all
+      - run: Scripts/packageNWScript.sh
+      - store_artifacts:
+          path: Binaries
       
 workflows:
   version: 2
