@@ -1,41 +1,21 @@
-defaults: &defaults
-  working_directory: /tmp
-  docker:
-    - image: nwnxee/builder
-
 version: 2
 jobs:
   build:
-    <<: *defaults
-    steps:
-      - checkout
-      - run: CC="gcc -m32" CXX="g++ -m32" cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .
-      - run: make all
-      - persist_to_workspace:
-          root: /tmp/workspace
-
-  deploy:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: /tmp
-      - run: Scripts/packageNWScript.sh
-      - store_artifacts:
-          path: Binaries
+  docker:
+    - image: nwnxee/builder
+  steps:
+    - checkout
+    - run: CC="gcc -m32" CXX="g++ -m32" cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+    - run: make all
+    - run: Scripts/packageNWScript.sh
+    - store_artifacts:
+        path: Binaries
       
 workflows:
   version: 2
-  build_deploy:
+  build_nwnxee:
     jobs:
       - build:
           filters:
             tags:
               only: /.*/
-      - deploy:
-          requires:
-            - build        
-          filters:
-            tags:
-              only: /^build.*/
-          branches:
-            only: /master/
